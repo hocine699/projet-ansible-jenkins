@@ -1,0 +1,23 @@
+---
+- name: Install MySQL
+  hosts: sqlserver
+  become: true
+  become_user: root
+
+  vars:
+    MySQL_root_pass: kingpin42330@
+
+  tasks:
+    - name: Test installation
+      apt:
+        name: "{{ item }}"
+        state: absent
+        force: yes
+        update_cache: yes
+        cache_valid_time: 3600
+      when: ansible_os_family == "Debian"
+      with_items:
+        - mysql-server
+        - mysql-client
+        - python3-mysqldb
+        - python3-mysqldb
